@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
-// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
 
 Vue.use(Router)
 
@@ -11,21 +9,19 @@ import Layout from '../views/layout/Layout'
 
 
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  {path: '/login', component: () => import('@/views/login/index'), hidden: true},
+  {path: '/404', component: () => import('@/views/404'), hidden: true},
 
   {
     path: '/',
     component: Layout,
-    meta: { title: '首页', icon: 'tree' },
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '缴费详情', icon: 'tree' }
-      }
-    ]
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: {title: '首页', icon: 'example'}
+    }]
   },
 
   {
@@ -33,19 +29,19 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: '住院管理', icon: 'example' },
+    meta: {title: '住院管理', icon: 'example'},
     children: [
       {
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: '住院详情', icon: 'table' }
+        meta: {title: '住院详情', icon: 'table'}
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: '住院填报', icon: 'tree' }
+        meta: {title: '住院填报', icon: 'tree'}
       }
     ]
   },
@@ -63,12 +59,12 @@ export const constantRouterMap = [
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'Menu1',
-        meta: { title: '出院缴费' ,icon: 'tree' },
+        meta: {title: '出院缴费', icon: 'tree'},
       },
       {
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
-        meta: { title: '出院详情' ,icon: 'tree' }
+        meta: {title: '出院详情', icon: 'tree'}
       }
     ]
   },
@@ -81,7 +77,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '医师管理', icon: 'form' }
+        meta: {title: '医师管理', icon: 'form'}
       }
     ]
   },
@@ -93,7 +89,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '护士管理',  icon: 'example' }
+        meta: {title: '护士管理', icon: 'example'}
       }
     ]
   },
@@ -105,7 +101,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '科室管理', icon: 'example' }
+        meta: {title: '科室管理', icon: 'example'}
       }
     ]
   },
@@ -117,7 +113,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '病人查询', icon: 'tree' }
+        meta: {title: '病人查询', icon: 'tree'}
       }
     ]
   },
@@ -129,16 +125,16 @@ export const constantRouterMap = [
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: '缴费详情', icon: 'tree' }
+        meta: {title: '缴费详情', icon: 'tree'}
       }
     ]
   },
 
-  { path: '*', redirect: '/404', hidden: true }
+  {path: '*', redirect: '/404', hidden: true}
 ]
 
 export default new Router({
   // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
