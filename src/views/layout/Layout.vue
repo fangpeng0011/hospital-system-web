@@ -3,60 +3,68 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar class="sidebar-container"/>
     <div class="main-container">
-      <navbar/>
+        <navbar/>
       <app-main/>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
+  import {Navbar, Sidebar, AppMain, NavbarTop} from './components'
+  import ResizeMixin from './mixin/ResizeHandler'
 
-export default {
-  name: 'Layout',
-  components: {
-    Navbar,
-    Sidebar,
-    AppMain
-  },
-  mixins: [ResizeMixin],
-  computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar
+  export default {
+    name: 'Layout',
+    components: {
+      NavbarTop,
+      Navbar,
+      Sidebar,
+      AppMain
     },
-    device() {
-      return this.$store.state.app.device
+    mixins: [ResizeMixin],
+    computed: {
+      sidebar() {
+        return this.$store.state.app.sidebar
+      },
+      device() {
+        return this.$store.state.app.device
+      },
+      classObj() {
+        return {
+          hideSidebar: !this.sidebar.opened,
+          openSidebar: this.sidebar.opened,
+          withoutAnimation: this.sidebar.withoutAnimation,
+          mobile: this.device === 'mobile'
+        }
+      }
     },
-    classObj() {
-      return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+    methods: {
+      handleClickOutside() {
+        this.$store.dispatch('CloseSideBar', {withoutAnimation: false})
       }
     }
-  },
-  methods: {
-    handleClickOutside() {
-      this.$store.dispatch('CloseSideBar', { withoutAnimation: false })
-    }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "src/styles/mixin.scss";
+
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
-    &.mobile.openSidebar{
+
+    &.mobile.openSidebar {
       position: fixed;
       top: 0;
     }
+
+    &.header-menu {
+      display: block;
+    }
   }
+
   .drawer-bg {
     background: #000;
     opacity: 0.3;
@@ -66,4 +74,5 @@ export default {
     position: absolute;
     z-index: 999;
   }
+
 </style>

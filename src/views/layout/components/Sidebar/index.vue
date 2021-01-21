@@ -15,21 +15,28 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SidebarItem from './SidebarItem'
+  import {mapGetters} from 'vuex'
+  import SidebarItem from './SidebarItem'
 
-export default {
-  components: { SidebarItem },
-  computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
-    routes() {
-      return this.$router.options.routes
+  export default {
+    components: {SidebarItem},
+    computed: {
+      ...mapGetters([
+        'sidebar'
+      ]),
+      routes() {
+        return this.$router.options.routes
+      },
+      isCollapse() {
+        return !this.sidebar.opened
+      }
     },
-    isCollapse() {
-      return !this.sidebar.opened
-    }
   }
-}
 </script>
+
+<style scoped>
+  .scrollbar-wrapper {
+    width: 200px;
+    height: 500px;
+  }
+</style>
